@@ -11,7 +11,7 @@
  '----------------' '----------------' '----------------' '----------------' '----------------*/
 
 #include<bits/stdc++.h>
-using namespace std;
+using namespace std; 
 
 typedef long long ll;
 typedef vector<int> vi; 
@@ -47,20 +47,49 @@ template<typename T> T gcd(T a, T b){return(b?__gcd(a,b):a);}
 template<typename T> T lcm(T a, T b){return(a*(b/gcd(a,b)));} 
 
  
+bool checkPrime(int n); //returns true when number is prime
+set<int> primeSieve(int n); // returns set of primes less than n
+
 // typedef unsigned long long int ulli;
 
 //                                               <<<  WRITE CODE HERE >>>
 
 void solve()
 {   
-   
+    
 }
+
 signed main()
 {   
-   FAST_IO
+    FAST_IO
     int t=1;
     // cin>>t;    // UNCOMMENT THIS LINE, WHEN MULTIPLE TEST CASES
     WL(t){ solve(); cout<<endl; }
     return 0;
 }
 
+bool checkPrime(int n){
+    for(int i=2;i<=sqrt(n);i++)
+        if(!(n%i))
+            return false;
+    return (n > 1);
+}
+
+set<int> primeSieve(int n){
+    set<int> primes;
+    bool *sieve = new bool[n+1];
+    sieve[0] = sieve[1] = false;
+    for(int i=2;i<=n;i++)
+        sieve[i] = true;
+    for(int i=2;i<=n;i++){
+        if(sieve[i]){
+            if(checkPrime(i)){ 
+                primes.insert(i);
+                for(int j = i*i ; j <= n ; j += i)
+                    sieve[j] = false;
+            }
+        }
+    }
+    delete [] sieve;
+    return primes;
+}
